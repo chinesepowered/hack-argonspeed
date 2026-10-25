@@ -1,9 +1,9 @@
 {
- "generated": "2026-10-25 21:39 UTC",
+ "generated": "2026-10-25 21:46 UTC",
  "problems": {
   "muse_bf16_proj": {
-   "checks": 5,
-   "passing": 4,
+   "checks": 6,
+   "passing": 5,
    "best": {
     "time": "2026-10-25 20:17",
     "passed": true,
@@ -55,17 +55,26 @@
       1.0752804340534272,
       1.1080300919433792
      ]
+    },
+    {
+     "time": "2026-10-25 21:16",
+     "passed": true,
+     "speedup": 0.9433370960856726,
+     "interval": [
+      0.9291870396443875,
+      0.9574871525269576
+     ]
     }
    ],
    "board": {
-    "rank": 916,
+    "rank": 918,
     "speedup": 1.0928,
     "first": false,
-    "ahead": 915,
+    "ahead": 917,
     "to_first": 1.4732
    },
    "leader": 1.6099,
-   "teams": 1002
+   "teams": 1004
   },
   "muse_attention_decode": {
    "checks": 4,
@@ -118,14 +127,14 @@
     }
    ],
    "board": {
-    "rank": 685,
+    "rank": 687,
     "speedup": 1.1303,
     "first": false,
-    "ahead": 684,
+    "ahead": 686,
     "to_first": 2.5743
    },
    "leader": 2.9097,
-   "teams": 734
+   "teams": 736
   },
   "muse_moe_w4a16": {
    "checks": 4,
@@ -182,7 +191,7 @@
     "to_first": 1.9088
    },
    "leader": 2.5227,
-   "teams": 783
+   "teams": 785
   },
   "muse_decode_layer": {
    "checks": 2,
@@ -214,10 +223,10 @@
     }
    ],
    "board": {
-    "rank": 524,
+    "rank": 525,
     "speedup": 1.2284,
     "first": false,
-    "ahead": 523,
+    "ahead": 524,
     "to_first": 1.8601
    },
    "leader": 2.2849,
@@ -265,11 +274,11 @@
  },
  "spend": {
   "hosted": {
-   "runs": 28,
-   "input": 31435765,
-   "cached": 29375591,
-   "output": 191760,
-   "cost": 8.975600000000002
+   "runs": 31,
+   "input": 37775921,
+   "cached": 35311147,
+   "output": 387504,
+   "cost": 12.335799999999997
   },
   "local": {
    "sessions": 0,

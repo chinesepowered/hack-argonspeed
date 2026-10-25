@@ -10,6 +10,7 @@ import glob
 import json
 import os
 import subprocess
+import tempfile
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,20 +29,34 @@ def load_env():
 
 
 def okc_json(*args):
-    return json.loads(subprocess.run([OKC, *args, "--json"], capture_output=True, text=True, check=True).stdout)
+    with tempfile.TemporaryDirectory() as tmp:  # okc status leaves the job's profile where it runs
+        return json.loads(subprocess.run([OKC, *args, "--json"], capture_output=True, text=True, check=True,
+                                         cwd=tmp).stdout)
 
 
-def checks(problem):
-    """Every archived check of the problem, oldest first: (time, passed, speedup, interval)."""
-    out = []
+def checks(problem, jobs):
+    """Every check of the problem, oldest first: (time, passed, speedup, interval). From the archive
+    okc check writes, plus the finished checks the judge lists after the newest archived one: the
+    ones no sync has brought back yet. (Earlier checks it lists that aren't archived are ours, not the
+    agents': SGLang's own kernel, the smoke test.)"""
+    out, seen, latest = [], set(), None
     for path in sorted(glob.glob(os.path.join(ROOT, "problems", problem, "attempts", "*.json"))):
         d = json.load(open(path))
         r = d.get("result") or {}
+        seen.add(d.get("id"))
         stamp = os.path.basename(path)[:16]
         when = datetime.strptime(stamp, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc)
+        latest = max(latest or when, when)
         out.append({"time": when.strftime("%Y-%m-%d %H:%M"), "passed": bool(r.get("passed")),
                     "speedup": r.get("speedup"), "interval": r.get("speedup_ci")})
-    return out
+    for job in jobs:
+        when = datetime.fromtimestamp(job["submitted_at"], timezone.utc)
+        if (job["problem"] == problem and job["mode"] == "check" and job["status"] == "done"
+                and job["job_id"] not in seen and (latest is None or when > latest)):
+            r = okc_json("status", job["job_id"]).get("result") or {}
+            out.append({"time": when.strftime("%Y-%m-%d %H:%M"), "passed": bool(r.get("passed")),
+                        "speedup": r.get("speedup"), "interval": r.get("speedup_ci")})
+    return sorted(out, key=lambda c: c["time"])
 
 
 def spend():
@@ -75,8 +90,9 @@ def main():
     load_env()
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     rows, data = [], {"generated": generated, "problems": {}}
+    jobs = okc_json("jobs")
     for p in PROBLEMS:
-        cs = checks(p)
+        cs = checks(p, jobs)
         passing = [c for c in cs if c["passed"] and c["speedup"]]
         best = max(passing, key=lambda c: c["speedup"]) if passing else None
         board = okc_json("leaderboard", p)

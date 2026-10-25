@@ -21,7 +21,7 @@ faster, so the rate of improvement compounds. That's the speed in Argon Speed.
   - the judge's per-shape profiles with speed-of-light bounds;
   - its own lab notebook from earlier runs.
 
-  So far that's 31M tokens over 28 hosted runs, 93% of them served from cache.
+  So far that's 38M tokens over 31 hosted runs, 93% of them served from cache.
 - **Engineering, not chat.** Argon runs the whole loop itself:
   - designs a change and writes the CUDA or Triton;
   - compiles it for the H200 in its sandbox before spending a judge check;
@@ -29,8 +29,8 @@ faster, so the rate of improvement compounds. That's the speed in Argon Speed.
 
   In one session it turned a design spec into a 742-line CUDA kernel that passed every hidden test
   on its first check, then profiled it and fixed what held it back.
-- **Cheap enough to leave on.** $8.98 for all 28 hosted runs so far, thanks to the cache. All five
-  agents around the clock come to about $66 a day.
+- **Cheap enough to leave on.** $12.34 for all 31 hosted runs so far, thanks to the cache. All five
+  agents around the clock come to about $73 a day.
 
 ## How we use Managed Agents: a kernel team that never sleeps
 
@@ -46,9 +46,9 @@ we sync results back (Files API) ─> scripts/results.py ─> results/, the deck
 
 - **One persistent sandbox per problem.** Five agents run in parallel, never two on the same
   problem. `/workspace` persists, so each run picks up where the last one stopped.
-- **Triggers make it 24/7.** A run lasts at most 10 minutes, so the work is a long chain of short
-  runs that hand over through each problem's `NOTES.md`. A judge check that outlasts a run is
-  collected by the next one.
+- **Triggers make it 24/7.** Each problem's trigger wakes its agent every hour, so the work is a
+  long chain of runs that hand over through the problem's `NOTES.md`. A judge check that outlasts
+  a run is collected by the next one.
 - **Secrets stay out of the sandbox.** The judge's token is a Managed Agents credential that the
   egress proxy attaches only to requests for the judge's domain. Inside the sandbox, the agent's
   CLI runs with a stand-in value.
@@ -66,17 +66,17 @@ we sync results back (Files API) ─> scripts/results.py ─> results/, the deck
 
 ## Results
 
-As of 2:50 pm PT, Oct 25. On the judge's leaderboards within its first afternoon, **faster than SGLang on all five
-problems**, #588 of 1,145 teams overall. Speedups are against SGLang's own kernel for the same
+As of 2:48 pm PT, Oct 25. On the judge's leaderboards within its first afternoon, **faster than SGLang on all five
+problems**, #590 of 1,145 teams overall. Speedups are against SGLang's own kernel for the same
 problem, on an H200.
 
 | problem | SGLang's distance from speed of light | our best check | our scored run | leaderboard |
 |---|---|---|---|---|
-| Dense BF16 projections (`muse_bf16_proj`) | 2.5x | 1.09x | 1.09x | #916 of 1,002 |
-| Attention decode, paged FP8 cache (`muse_attention_decode`) | 11.4x | 1.26x | 1.13x | #685 of 734 |
-| Routed experts, NVFP4 weights (`muse_moe_w4a16`) | 4.4x | 1.32x | 1.32x | #559 of 783 |
-| Whole decoder layer, decode (`muse_decode_layer`) | 3.9x | 1.23x | 1.23x | #524 of 683 |
-| Whole decoder layer, prefill (`muse_prefill_layer`) | 3.0x | 1.03x | 1.02x | #364 of 420 |
+| Dense BF16 projections (`muse_bf16_proj`) | 2.5x | 1.09x | 1.09x | #918 of 1,004 |
+| Attention decode, paged FP8 cache (`muse_attention_decode`) | 11.4x | 1.26x | 1.13x | #687 of 736 |
+| Routed experts, NVFP4 weights (`muse_moe_w4a16`) | 4.4x | 1.32x | 1.32x | #559 of 785 |
+| Whole decoder layer, decode (`muse_decode_layer`) | 3.9x | 1.23x | 1.23x | #525 of 683 |
+| Whole decoder layer, prefill (`muse_prefill_layer`) | 3.0x | 1.03x | 1.02x | #365 of 421 |
 
 **What it's worth at scale.** Our decode-layer speedup of 1.23x makes each decode step about 14%
 faster. On 50,000 GPUs that's about $86M a year, and it saves users about 12,787 years of waiting

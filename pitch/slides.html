@@ -66,15 +66,15 @@ that AI models run on, around the clock. Today: Muse Spark Open's. Next: its own
 <div class="kicker">Million-token engineering</div>
 <h2>It reads the whole stack, then writes the kernel</h2>
 <div class="grid3">
-  <div class="stat"><b>31M</b><span>tokens read, 93% from cache: SGLang's source at the judge's commit, its environment, per-shape profiles</span></div>
+  <div class="stat"><b>38M</b><span>tokens read, 93% from cache: SGLang's source at the judge's commit, its environment, per-shape profiles</span></div>
   <div class="stat"><b>742</b><span>lines of CUDA kernel from a team design spec, written in one session</span></div>
   <div class="stat"><b>9 / 9</b><span>hidden correctness tests passed on its first check</span></div>
 </div><footer><span>Argon Speed</span><span>3 / 5</span></footer></section><section class="slide" id="results">
 <div class="kicker">Results, as the judge measured them</div>
 <h2>Faster than SGLang on all 5 problems</h2>
 <table class="results"><thead><tr><th>problem</th><th>headroom</th><th>our best check</th><th>scored / board</th><th>board leader</th></tr></thead>
-<tbody><tr><td><b>Dense projections</b><span>BF16 projections and the FP32 router</span></td><td>2.5×</td><td class='win'>1.092×</td><td>#916 of 1,002</td><td>1.61×</td></tr><tr><td><b>Attention decode</b><span>gated GQA over a paged FP8 cache</span></td><td>11.4×</td><td class='win'>1.260×</td><td>#685 of 734</td><td>2.91×</td></tr><tr><td><b>Routed experts</b><span>top-8 of 256 experts, NVFP4 weights</span></td><td>4.4×</td><td class='win'>1.323×</td><td>#559 of 783</td><td>2.52×</td></tr><tr><td><b>Decoder layer</b><span>a whole layer at decode shapes</span></td><td>3.9×</td><td class='win'>1.226×</td><td>#524 of 683</td><td>2.28×</td></tr><tr><td><b>Prefill layer</b><span>a whole layer at prefill shapes</span></td><td>3.0×</td><td class='win'>1.033×</td><td>#364 of 420</td><td>1.96×</td></tr></tbody></table>
-<p class="note">#588 of 1,145 teams on the overall board. $8.98 spent so far; about $66 a day, estimated, for all five 24/7.</p><footer><span>Argon Speed</span><span>4 / 5</span></footer></section><section class="slide" id="compound">
+<tbody><tr><td><b>Dense projections</b><span>BF16 projections and the FP32 router</span></td><td>2.5×</td><td class='win'>1.092×</td><td>#918 of 1,004</td><td>1.61×</td></tr><tr><td><b>Attention decode</b><span>gated GQA over a paged FP8 cache</span></td><td>11.4×</td><td class='win'>1.260×</td><td>#687 of 736</td><td>2.91×</td></tr><tr><td><b>Routed experts</b><span>top-8 of 256 experts, NVFP4 weights</span></td><td>4.4×</td><td class='win'>1.323×</td><td>#559 of 785</td><td>2.52×</td></tr><tr><td><b>Decoder layer</b><span>a whole layer at decode shapes</span></td><td>3.9×</td><td class='win'>1.226×</td><td>#525 of 683</td><td>2.28×</td></tr><tr><td><b>Prefill layer</b><span>a whole layer at prefill shapes</span></td><td>3.0×</td><td class='win'>1.033×</td><td>#365 of 421</td><td>1.96×</td></tr></tbody></table>
+<p class="note">#590 of 1,145 teams on the overall board. $12.34 spent so far; about $73 a day, estimated, for all five 24/7.</p><footer><span>Argon Speed</span><span>4 / 5</span></footer></section><section class="slide" id="compound">
 <div class="kicker">The speed in Argon Speed</div>
 <h2>Aimed at its own serving, it compounds</h2>
 <div class="split">

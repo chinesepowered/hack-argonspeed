@@ -1,6 +1,6 @@
 # Results
 
-Generated 2026-10-25 21:39 UTC by `scripts/results.py` from the judge's records and the harness's own
+Generated 2026-10-25 21:46 UTC by `scripts/results.py` from the judge's records and the harness's own
 ledger. Every speedup is the judge's measurement on an H200 against SGLang's kernel for the same
 problem; numbers only, no kernels or techniques.
 
@@ -8,18 +8,18 @@ problem; numbers only, no kernels or techniques.
 
 | problem | best check | 95% interval | checks passing | our board position | board leader |
 |---|---|---|---|---|---|
-| `muse_bf16_proj` | 1.092x | 1.075-1.108 | 4 of 5 | #916 at 1.093x | 1.610x of 1002 |
-| `muse_attention_decode` | 1.260x | 1.241-1.283 | 4 of 4 | #685 at 1.130x | 2.910x of 734 |
-| `muse_moe_w4a16` | 1.323x | 1.303-1.343 | 3 of 4 | #559 at 1.322x | 2.523x of 783 |
-| `muse_decode_layer` | 1.226x | 1.207-1.244 | 1 of 2 | #524 at 1.228x | 2.285x of 683 |
+| `muse_bf16_proj` | 1.092x | 1.075-1.108 | 5 of 6 | #918 at 1.093x | 1.610x of 1004 |
+| `muse_attention_decode` | 1.260x | 1.241-1.283 | 4 of 4 | #687 at 1.130x | 2.910x of 736 |
+| `muse_moe_w4a16` | 1.323x | 1.303-1.343 | 3 of 4 | #559 at 1.322x | 2.523x of 785 |
+| `muse_decode_layer` | 1.226x | 1.207-1.244 | 1 of 2 | #525 at 1.228x | 2.285x of 683 |
 | `muse_prefill_layer` | 1.033x | 1.018-1.049 | 1 of 2 | #365 at 1.024x | 1.963x of 421 |
 
 ## What it took
 
-- Hosted runs (Gemini 4 Argon as Google's managed Antigravity agent): 28
+- Hosted runs (Gemini 4 Argon as Google's managed Antigravity agent): 31
 - Local sessions (Qwen Code): 0
-- Tokens: 31,435,765 input (93% cached), 191,760 output and thinking
-- Estimated spend at Argon's introductory prices: $8.98
+- Tokens: 37,775,921 input (93% cached), 387,504 output and thinking
+- Estimated spend at Argon's introductory prices: $12.34
 
 ## Every check, oldest first
 
@@ -32,6 +32,7 @@ problem; numbers only, no kernels or techniques.
 | 2026-10-25 20:06 | 1.072x | 1.072x |
 | 2026-10-25 20:13 | 0.938x | 1.072x |
 | 2026-10-25 20:17 | 1.092x | 1.092x |
+| 2026-10-25 21:16 | 0.943x | 1.092x |
 
 ### `muse_attention_decode`
 

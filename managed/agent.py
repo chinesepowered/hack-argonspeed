@@ -392,7 +392,7 @@ def sync_problem(env, problem):
             if not whole:  # or rewritten by hand: take the judge's own record of the job
                 job = name.rsplit("-", 1)[-1][:-5]
                 data = subprocess.run([os.path.expanduser("~/.okc/bin/okc"), "status", job, "--json"],
-                                      capture_output=True, check=True).stdout
+                                      capture_output=True, check=True, cwd=local).stdout  # its profile lands in profiles/
         dest = os.path.join(local, name)
         os.makedirs(os.path.dirname(dest), exist_ok=True)
         with open(dest, "wb") as f:
