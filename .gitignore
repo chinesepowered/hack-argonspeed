@@ -1,0 +1,20 @@
+# GEMINI_API_KEY and OKC_TOKEN (see .env.example)
+.env
+
+# SGLang's source at the judge's commit, fetched by scripts/setup.sh
+vendor/
+
+# Session transcripts are large; runs/ledger.jsonl keeps each session's summary
+runs/*/
+
+__pycache__/
+
+# google-genai for managed/, created by scripts/setup.sh
+.venv/
+managed/state.json.lock
+managed/state.json.tmp
+
+# Kept out of this repo: the agents' kernels and notebooks, their summaries, and the narration cache
+problems/muse_*/
+managed/state.json
+pitch/audio/

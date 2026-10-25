@@ -1,0 +1,27 @@
+[
+ {
+  "slide": 1,
+  "id": "title",
+  "text": "This is Argon Speed: AI that makes itself faster. The speed and cost of every AI model come down to a handful of GPU kernels, and even SGLang's production kernels run two and a half to eleven times slower than the hardware allows. Gemini 4 Argon, running on Google's Managed Agents, rewrites them around the clock. Today, it's speeding up Muse Spark Open."
+ },
+ {
+  "slide": 2,
+  "id": "how",
+  "text": "Each of the five kernel problems has its own persistent sandbox, and a Google trigger wakes Argon there every hour, with no laptop involved. Argon reads its notebook, improves its kernel, and checks it on an independent judge that times it on a real H200 against SGLang. Secrets never enter the sandbox, and people approve every scored run."
+ },
+ {
+  "slide": 3,
+  "id": "tokens",
+  "text": "Argon reads the whole stack: SGLang's source at the judge's exact commit, the judge's environment, and per-shape profiles, 31 million tokens so far. In one session it turned a design spec into a 742 line CUDA kernel that passed every hidden test on its first check, then profiled it and fixed what held it back."
+ },
+ {
+  "slide": 4,
+  "id": "results",
+  "text": "Here are the judge's numbers. Argon beat SGLang's kernels on all five problems, up to 1.32 times faster on routed experts, and it's on five leaderboards, ranked 588 of 1,145 teams overall, in its first afternoon. Running all five around the clock costs roughly 66 dollars a day."
+ },
+ {
+  "slide": 5,
+  "id": "compound",
+  "text": "Now point it at Gemini's own serving stack. Every speedup makes the agent's own runs cheaper and quicker, so the next one comes sooner: AI making itself faster, and accelerating. With our own decode-layer kernel alone, that's 14 percent off every decode step, or about 86 million dollars a year on 50,000 GPUs. Today it's Muse. Next, it's Gemini itself. That's Argon Speed."
+ }
+]

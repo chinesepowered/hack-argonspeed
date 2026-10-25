@@ -1,0 +1,35 @@
+{
+  "note": "Illustrative assumptions for what a decode-layer speedup is worth at scale. Edit them; scripts/results.py recomputes results/README.md. The speedups come from the judge.",
+  "layer_share_of_step": {
+    "value": 0.75,
+    "why": "Share of a decode step's GPU time in the per-layer kernels that muse_decode_layer covers; the rest is communication (all-reduce), sampling and scheduling."
+  },
+  "decode_share_of_serving": {
+    "value": 0.6,
+    "why": "Share of serving GPU time spent decoding rather than prefilling."
+  },
+  "gpus": {
+    "value": [10000, 50000, 100000],
+    "why": "H200-class GPUs serving the model: scenarios, since Meta publishes no fleet figure for 2026."
+  },
+  "utilization": {
+    "value": 0.6,
+    "why": "Fraction of each GPU-hour spent serving."
+  },
+  "gpu_hour_usd": {
+    "value": 3.95,
+    "why": "H200 rental market median per GPU-hour (GMI Cloud's 2026 guide); an owner's cost is lower, a hyperscaler's on-demand price higher."
+  },
+  "requests_per_day": {
+    "value": 1000000000,
+    "why": "Meta AI passed 1 billion monthly users in May 2025 (Zuckerberg, shareholder meeting); about one request per user per day."
+  },
+  "output_tokens_per_request": {
+    "value": 400,
+    "why": "Tokens decoded per response."
+  },
+  "ms_per_output_token": {
+    "value": 20,
+    "why": "Decode time per token per request at serving batch sizes."
+  }
+}

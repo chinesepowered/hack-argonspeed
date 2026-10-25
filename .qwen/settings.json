@@ -1,0 +1,33 @@
+{
+  "security": {
+    "auth": { "selectedType": "gemini" }
+  },
+  "model": {
+    "name": "gemini-4-argon"
+  },
+  "modelProviders": {
+    "gemini": [
+      {
+        "id": "gemini-4-argon",
+        "name": "Gemini 4 Argon",
+        "envKey": "GEMINI_API_KEY",
+        "baseUrl": "https://generativelanguage.googleapis.com",
+        "generationConfig": {
+          "timeout": 900000,
+          "maxRetries": 3,
+          "contextWindowSize": 1048576,
+          "samplingParams": { "max_tokens": 65536 },
+          "reasoning": { "effort": "high" }
+        }
+      }
+    ]
+  },
+  "tools": {
+    "shell": { "defaultTimeoutMs": 900000 }
+  },
+  "privacy": { "usageStatisticsEnabled": false },
+  "general": {
+    "enableAutoUpdate": false
+  },
+  "$version": 4
+}

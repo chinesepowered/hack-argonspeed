@@ -1,0 +1,101 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Argon Speed</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"><style>
+:root { --bg:#090d1a; --panel:#121a33; --text:#eef1fb; --muted:#9aa6c6; --accent:#8f7cff; --accent2:#35d0ff; --win:#3ddc97; --lose:#ff9a6b; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html, body { height:100%; background:var(--bg); color:var(--text); font-family:Inter, "Inter Display", system-ui, sans-serif; overflow:hidden; }
+#stage { position:absolute; left:50%; top:50%; width:1920px; height:1080px; transform-origin:center center; }
+.slide { position:absolute; inset:0; padding:100px 140px 130px; display:none; flex-direction:column; gap:40px;
+  background: radial-gradient(1200px 700px at 85% 0%, rgba(143,124,255,.22), transparent 60%),
+              radial-gradient(900px 600px at 0% 100%, rgba(53,208,255,.14), transparent 60%), var(--bg); }
+.slide.on { display:flex; }
+.kicker { font-size:30px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent2); font-weight:600; }
+h1.hero { font-size:190px; line-height:1; font-weight:800; letter-spacing:-.04em;
+  background:linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero.small { font-size:84px; font-weight:800; margin-top:auto; background:linear-gradient(90deg, #fff, var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+h2 { font-size:76px; line-height:1.08; font-weight:800; letter-spacing:-.02em; max-width:1600px; }
+.lede { font-size:44px; line-height:1.4; color:#d6dbef; max-width:1500px; }
+.note { font-size:30px; line-height:1.45; color:var(--muted); max-width:1600px; margin-top:auto; }
+.tags { display:flex; flex-wrap:wrap; gap:20px; margin-top:auto; }
+.tags span { font-size:28px; padding:12px 26px; border-radius:999px; white-space:nowrap; background:rgba(143,124,255,.16); border:1px solid rgba(143,124,255,.45); }
+.grid3 { display:grid; grid-template-columns:repeat(3, 1fr); gap:40px; }
+.stat { background:var(--panel); border:1px solid rgba(255,255,255,.07); border-radius:28px; padding:44px 46px; display:flex; flex-direction:column; gap:18px; }
+.stat b { font-size:96px; font-weight:800; letter-spacing:-.03em; color:#fff; }
+.stat span { font-size:30px; line-height:1.4; color:var(--muted); }
+.stat.big b { font-size:130px; color:var(--win); }
+.points { list-style:none; display:flex; flex-direction:column; gap:34px; }
+.points li { font-size:42px; line-height:1.35; padding-left:56px; position:relative; color:#dfe3f3; }
+.points li::before { content:""; position:absolute; left:0; top:20px; width:22px; height:22px; border-radius:50%; background:var(--accent); }
+.flow { display:flex; align-items:stretch; gap:22px; margin-top:10px; }
+.flow i { font-style:normal; font-size:70px; color:var(--accent); align-self:center; }
+.box { flex:1; background:var(--panel); border:1px solid rgba(255,255,255,.08); border-radius:26px; padding:38px 34px; display:flex; flex-direction:column; gap:16px; }
+.box.accent { border-color:var(--accent); box-shadow:0 0 60px rgba(143,124,255,.25); }
+.box b { font-size:38px; } .box span { font-size:28px; color:var(--muted); line-height:1.4; }
+table.results { width:100%; border-collapse:collapse; font-size:34px; }
+table.results th { text-align:left; font-size:26px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:0 18px 18px; font-weight:600; }
+table.results td { padding:16px 18px; border-top:1px solid rgba(255,255,255,.08); }
+table.results th, table.results td { white-space:nowrap; }
+table.results td span { display:block; font-size:24px; color:var(--muted); margin-top:4px; }
+table.results td.win { color:var(--win); font-weight:800; } table.results td.lose { color:var(--lose); font-weight:700; }
+table.results.small { font-size:36px; width:auto; flex:1; }
+.split { display:flex; gap:60px; align-items:stretch; }
+.split .stat { width:540px; }
+.cycle { flex:1; display:flex; flex-direction:column; gap:14px; }
+.cycle i { font-style:normal; font-size:52px; color:var(--accent); text-align:center; line-height:1; }
+.cycle .box { padding:24px 34px; } .cycle .box b { font-size:42px; }
+.stack { width:640px; display:flex; flex-direction:column; gap:30px; }
+.stack .stat { width:auto; padding:34px 40px; } .stack .stat b { font-size:84px; color:var(--win); }
+footer { position:absolute; left:140px; right:140px; bottom:54px; display:flex; justify-content:space-between; font-size:24px; color:#5f6a8c; }
+</style></head><body><div id="stage"><section class="slide" id="title">
+<div class="kicker">Problem Statement One: Million Token Engineering · Managed Agents</div>
+<h1 class="hero">Argon Speed</h1>
+<p class="lede">AI that makes itself faster. Gemini 4 Argon, running on Google's Managed Agents, rewrites the GPU kernels
+that AI models run on, around the clock. Today: Muse Spark Open's. Next: its own.</p>
+<div class="grid3">
+  <div class="stat"><b>816B</b><span>parameters in Muse Spark Open, served by SGLang on 8×H200</span></div>
+  <div class="stat"><b>5</b><span>GPU kernels that decide its speed, from projections to a whole decoder layer</span></div>
+  <div class="stat"><b>2.5–11×</b><span>the gap between SGLang's production kernels and the speed of light</span></div>
+</div><footer><span>Argon Speed</span><span>1 / 5</span></footer></section><section class="slide" id="how">
+<div class="kicker">24/7 on Google's Managed Agents</div>
+<h2>A research loop with an independent judge</h2>
+<div class="flow">
+  <div class="box"><b>Google trigger</b><span>wakes each problem's agent every hour</span></div><i>→</i>
+  <div class="box accent"><b>Gemini 4 Argon</b><span>in the problem's own persistent sandbox</span></div><i>→</i>
+  <div class="box"><b>okc check</b><span>the judge times it on an H200 against SGLang</span></div><i>→</i>
+  <div class="box"><b>NOTES.md</b><span>what it learned and the next step</span></div>
+</div>
+<div class="tags"><span>No secrets in the sandbox</span><span>20 checks a day, budgeted</span><span>Compiles before it checks</span><span>People approve scored runs</span></div><footer><span>Argon Speed</span><span>2 / 5</span></footer></section><section class="slide" id="tokens">
+<div class="kicker">Million-token engineering</div>
+<h2>It reads the whole stack, then writes the kernel</h2>
+<div class="grid3">
+  <div class="stat"><b>31M</b><span>tokens read, 93% from cache: SGLang's source at the judge's commit, its environment, per-shape profiles</span></div>
+  <div class="stat"><b>742</b><span>lines of CUDA kernel from a team design spec, written in one session</span></div>
+  <div class="stat"><b>9 / 9</b><span>hidden correctness tests passed on its first check</span></div>
+</div><footer><span>Argon Speed</span><span>3 / 5</span></footer></section><section class="slide" id="results">
+<div class="kicker">Results, as the judge measured them</div>
+<h2>Faster than SGLang on all 5 problems</h2>
+<table class="results"><thead><tr><th>problem</th><th>headroom</th><th>our best check</th><th>scored / board</th><th>board leader</th></tr></thead>
+<tbody><tr><td><b>Dense projections</b><span>BF16 projections and the FP32 router</span></td><td>2.5×</td><td class='win'>1.092×</td><td>#916 of 1,002</td><td>1.61×</td></tr><tr><td><b>Attention decode</b><span>gated GQA over a paged FP8 cache</span></td><td>11.4×</td><td class='win'>1.260×</td><td>#685 of 734</td><td>2.91×</td></tr><tr><td><b>Routed experts</b><span>top-8 of 256 experts, NVFP4 weights</span></td><td>4.4×</td><td class='win'>1.323×</td><td>#559 of 783</td><td>2.52×</td></tr><tr><td><b>Decoder layer</b><span>a whole layer at decode shapes</span></td><td>3.9×</td><td class='win'>1.226×</td><td>#524 of 683</td><td>2.28×</td></tr><tr><td><b>Prefill layer</b><span>a whole layer at prefill shapes</span></td><td>3.0×</td><td class='win'>1.033×</td><td>#364 of 420</td><td>1.96×</td></tr></tbody></table>
+<p class="note">#588 of 1,145 teams on the overall board. $8.98 spent so far; about $66 a day, estimated, for all five 24/7.</p><footer><span>Argon Speed</span><span>4 / 5</span></footer></section><section class="slide" id="compound">
+<div class="kicker">The speed in Argon Speed</div>
+<h2>Aimed at its own serving, it compounds</h2>
+<div class="split">
+  <div class="cycle">
+    <div class="box"><b>Faster kernels</b></div><i>↓</i>
+    <div class="box"><b>Cheaper, quicker agent runs</b></div><i>↓</i>
+    <div class="box accent"><b>More iterations a day</b><span>so the next speedup comes sooner</span></div>
+  </div>
+  <div class="stack">
+    <div class="stat"><b>14%</b><span>off every decode step at our own decode-layer kernel (1.23×)</span></div>
+    <div class="stat"><b>$86M</b><span>a year on 50,000 GPUs, and 12,787 years of user waiting saved (illustrative)</span></div>
+  </div>
+</div><footer><span>Argon Speed</span><span>5 / 5</span></footer></section></div><script>
+const slides = [...document.querySelectorAll('.slide')];
+let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1)) || 1) - 1));
+function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  document.getElementById('stage').style.transform = `translate(-50%, -50%) scale(${s})`; }
+function show(n) { i = Math.max(0, Math.min(slides.length - 1, n)); slides.forEach((el, k) => el.classList.toggle('on', k === i));
+  history.replaceState(null, '', '#' + (i + 1)); }
+addEventListener('keydown', e => { if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(e.key)) show(i + 1);
+  if (['ArrowLeft', 'PageUp', 'Backspace'].includes(e.key)) show(i - 1); if (e.key === 'Home') show(0); if (e.key === 'End') show(slides.length - 1); });
+addEventListener('click', e => show(e.clientX > innerWidth / 3 ? i + 1 : i - 1));
+addEventListener('resize', fit); fit(); show(i);
+</script></body></html>

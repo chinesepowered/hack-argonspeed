@@ -1,0 +1,282 @@
+{
+ "generated": "2026-10-25 21:39 UTC",
+ "problems": {
+  "muse_bf16_proj": {
+   "checks": 5,
+   "passing": 4,
+   "best": {
+    "time": "2026-10-25 20:17",
+    "passed": true,
+    "speedup": 1.0916552629984033,
+    "interval": [
+     1.0752804340534272,
+     1.1080300919433792
+    ]
+   },
+   "history": [
+    {
+     "time": "2026-10-25 18:57",
+     "passed": true,
+     "speedup": 0.6625136080195669,
+     "interval": [
+      0.6525759038992734,
+      0.6724513121398604
+     ]
+    },
+    {
+     "time": "2026-10-25 19:25",
+     "passed": false,
+     "speedup": null,
+     "interval": null
+    },
+    {
+     "time": "2026-10-25 20:06",
+     "passed": true,
+     "speedup": 1.0720369715648879,
+     "interval": [
+      1.0559564169914146,
+      1.088117526138361
+     ]
+    },
+    {
+     "time": "2026-10-25 20:13",
+     "passed": true,
+     "speedup": 0.9379813517233514,
+     "interval": [
+      0.9239116314475011,
+      0.9520510719992016
+     ]
+    },
+    {
+     "time": "2026-10-25 20:17",
+     "passed": true,
+     "speedup": 1.0916552629984033,
+     "interval": [
+      1.0752804340534272,
+      1.1080300919433792
+     ]
+    }
+   ],
+   "board": {
+    "rank": 916,
+    "speedup": 1.0928,
+    "first": false,
+    "ahead": 915,
+    "to_first": 1.4732
+   },
+   "leader": 1.6099,
+   "teams": 1002
+  },
+  "muse_attention_decode": {
+   "checks": 4,
+   "passing": 4,
+   "best": {
+    "time": "2026-10-25 20:52",
+    "passed": true,
+    "speedup": 1.2596297671680277,
+    "interval": [
+     1.2407353206605072,
+     1.2833275201791736
+    ]
+   },
+   "history": [
+    {
+     "time": "2026-10-25 19:42",
+     "passed": true,
+     "speedup": 1.123367239497054,
+     "interval": [
+      1.1065167309045982,
+      1.1402177480895097
+     ]
+    },
+    {
+     "time": "2026-10-25 20:25",
+     "passed": true,
+     "speedup": 0.770129166722433,
+     "interval": [
+      0.7585772292215965,
+      0.7816811042232694
+     ]
+    },
+    {
+     "time": "2026-10-25 20:38",
+     "passed": true,
+     "speedup": 1.1866709126819996,
+     "interval": [
+      1.1688708489917696,
+      1.2044709763722294
+     ]
+    },
+    {
+     "time": "2026-10-25 20:52",
+     "passed": true,
+     "speedup": 1.2596297671680277,
+     "interval": [
+      1.2407353206605072,
+      1.2833275201791736
+     ]
+    }
+   ],
+   "board": {
+    "rank": 685,
+    "speedup": 1.1303,
+    "first": false,
+    "ahead": 684,
+    "to_first": 2.5743
+   },
+   "leader": 2.9097,
+   "teams": 734
+  },
+  "muse_moe_w4a16": {
+   "checks": 4,
+   "passing": 3,
+   "best": {
+    "time": "2026-10-25 19:55",
+    "passed": true,
+    "speedup": 1.3227806904369508,
+    "interval": [
+     1.3029389800803965,
+     1.342622400793505
+    ]
+   },
+   "history": [
+    {
+     "time": "2026-10-25 19:55",
+     "passed": true,
+     "speedup": 1.3227806904369508,
+     "interval": [
+      1.3029389800803965,
+      1.342622400793505
+     ]
+    },
+    {
+     "time": "2026-10-25 20:26",
+     "passed": false,
+     "speedup": null,
+     "interval": null
+    },
+    {
+     "time": "2026-10-25 20:29",
+     "passed": true,
+     "speedup": 1.2211599051860316,
+     "interval": [
+      1.202842506608241,
+      1.2394773037638218
+     ]
+    },
+    {
+     "time": "2026-10-25 20:40",
+     "passed": true,
+     "speedup": 1.2365052719392884,
+     "interval": [
+      1.217957692860199,
+      1.2550528510183776
+     ]
+    }
+   ],
+   "board": {
+    "rank": 559,
+    "speedup": 1.3216,
+    "first": false,
+    "ahead": 558,
+    "to_first": 1.9088
+   },
+   "leader": 2.5227,
+   "teams": 783
+  },
+  "muse_decode_layer": {
+   "checks": 2,
+   "passing": 1,
+   "best": {
+    "time": "2026-10-25 19:59",
+    "passed": true,
+    "speedup": 1.2256859562992284,
+    "interval": [
+     1.20730066695474,
+     1.2440712456437166
+    ]
+   },
+   "history": [
+    {
+     "time": "2026-10-25 19:51",
+     "passed": false,
+     "speedup": null,
+     "interval": null
+    },
+    {
+     "time": "2026-10-25 19:59",
+     "passed": true,
+     "speedup": 1.2256859562992284,
+     "interval": [
+      1.20730066695474,
+      1.2440712456437166
+     ]
+    }
+   ],
+   "board": {
+    "rank": 524,
+    "speedup": 1.2284,
+    "first": false,
+    "ahead": 523,
+    "to_first": 1.8601
+   },
+   "leader": 2.2849,
+   "teams": 683
+  },
+  "muse_prefill_layer": {
+   "checks": 2,
+   "passing": 1,
+   "best": {
+    "time": "2026-10-25 20:21",
+    "passed": true,
+    "speedup": 1.033346704633414,
+    "interval": [
+     1.0178465040639126,
+     1.048846905202915
+    ]
+   },
+   "history": [
+    {
+     "time": "2026-10-25 20:07",
+     "passed": false,
+     "speedup": null,
+     "interval": null
+    },
+    {
+     "time": "2026-10-25 20:21",
+     "passed": true,
+     "speedup": 1.033346704633414,
+     "interval": [
+      1.0178465040639126,
+      1.048846905202915
+     ]
+    }
+   ],
+   "board": {
+    "rank": 365,
+    "speedup": 1.0244,
+    "first": false,
+    "ahead": 364,
+    "to_first": 1.9163
+   },
+   "leader": 1.9631,
+   "teams": 421
+  }
+ },
+ "spend": {
+  "hosted": {
+   "runs": 28,
+   "input": 31435765,
+   "cached": 29375591,
+   "output": 191760,
+   "cost": 8.975600000000002
+  },
+  "local": {
+   "sessions": 0,
+   "input": 0,
+   "cached": 0,
+   "output": 0,
+   "cost": 0.0
+  }
+ }
+}

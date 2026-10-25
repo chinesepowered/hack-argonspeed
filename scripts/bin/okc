@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+# okc as the agent sees it (scripts/agent.sh puts this first on its PATH).
+#
+# - Read-only commands pass straight through.
+# - `okc check` refuses files that don't compile, spends at most OKC_CHECK_BUDGET checks per
+#   session (OKC_SESSION_DIR), or per OKC_BUDGET_WINDOW_MINUTES of wall clock when there's no
+#   session, as on the hosted agent's scheduled runs, and archives every checked file with its
+#   result in attempts/ beside it.
+# - Everything else is refused: scored runs (`okc submit`) and withdrawals are a person's call,
+#   through scripts/submit.sh. This is a guardrail against a too-eager agent, not a security
+#   boundary: the agent still has the token.
+set -euo pipefail
+
+real=${OKC_REAL:-$HOME/.okc/bin/okc}
+cmd=${1:-help}
+
+# Save a finished job's full JSON beside its archived attempts/*-<job>.py, once.
+save_result() {
+  local job=$1 py tmp
+  for py in attempts/*-"$job".py; do
+    [ -f "$py" ] && [ ! -s "${py%.py}.json" ] || continue
+    tmp=$(mktemp)
+    if "$real" status "$job" --json > "$tmp" 2>/dev/null &&
+      python3 -c 'import json, sys; sys.exit(json.load(open(sys.argv[1]))["status"] not in
+        ("done", "failed", "rejected", "duplicate"))' "$tmp"; then
+      mv "$tmp" "${py%.py}.json"
+      chmod 644 "${py%.py}.json"
+    else
+      rm -f "$tmp"
+    fi
+  done
+}
+
+case $cmd in
+  check) shift ;;
+  status)
+    rc=0
+    "$real" "$@" || rc=$?
+    for a in "${@:2}"; do [[ $a == -* ]] || save_result "$a"; done
+    exit $rc ;;
+  jobs | problems | show | leaderboard | version | help | whoami) exec "$real" "$@" ;;
+  *)
+    echo "okc $cmd isn't available here. You can use: check, status, jobs, problems, show," \
+      "leaderboard. A person makes scored runs." >&2
+    exit 2 ;;
+esac
+
+json=0 args=()
+for a in "$@"; do
+  case $a in
+    --json) json=1 ;;
+    --no-wait) ;; # always waits: the result is what the agent needs next
+    -*) echo "okc check: unknown flag $a" >&2; exit 2 ;;
+    *) args+=("$a") ;;
+  esac
+done
+[ ${#args[@]} -ge 1 ] || { echo "usage: okc check [problem] <file>" >&2; exit 2; }
+file=${args[-1]}
+[ -f "$file" ] || { echo "okc check: no file $file" >&2; exit 2; }
+python3 -m py_compile "$file" || { echo "not submitted: $file doesn't compile (no check spent)" >&2; exit 1; }
+
+if [ -z "${OKC_SESSION_DIR:-}" ] && [ -n "${OKC_BUDGET_WINDOW_MINUTES:-}" ]; then
+  OKC_SESSION_DIR=$HOME/.okc-windows/$(($(date -u +%s) / (OKC_BUDGET_WINDOW_MINUTES * 60)))
+  mkdir -p "$OKC_SESSION_DIR"
+fi
+used=0
+if [ -n "${OKC_SESSION_DIR:-}" ]; then
+  used=$(cat "$OKC_SESSION_DIR/checks_used" 2>/dev/null || echo 0)
+  if [ "$used" -ge "${OKC_CHECK_BUDGET:-0}" ]; then
+    echo "not submitted: this session's ${OKC_CHECK_BUDGET:-0} checks are spent. Record what you" \
+      "learned in NOTES.md and finish." >&2
+    exit 3
+  fi
+fi
+
+cd "$(dirname "$file")"
+file=$(basename "$file")
+mkdir -p attempts
+sent=$(mktemp) # archive exactly what was sent: copy before submitting
+cp "$file" "$sent"
+if ! out=$("$real" check "${args[@]:0:${#args[@]}-1}" "$file" --no-wait --json 2>&1); then
+  rm -f "$sent"
+  echo "$out" >&2
+  exit 1
+fi
+job=$(printf '%s' "$out" | python3 -c 'import json, sys; print(json.load(sys.stdin)["job_id"])')
+[ -n "${OKC_SESSION_DIR:-}" ] && echo $((used + 1)) > "$OKC_SESSION_DIR/checks_used"
+stamp=$(date -u +%Y%m%dT%H%M%SZ)
+mv "$sent" "attempts/$stamp-$job.py"
+chmod 644 "attempts/$stamp-$job.py"
+echo "job $job: archived as attempts/$stamp-$job.py; waiting for the judge" \
+  "(if this command is cut off, run: okc status $job --wait)"
+
+rc=0
+if [ $json = 1 ]; then
+  "$real" status "$job" --wait --json > /dev/null || rc=$?
+else
+  "$real" status "$job" --wait || rc=$?
+fi
+save_result "$job"
+result=attempts/$stamp-$job.json
+
+# The judge answers identical code with the earlier run's result, without spending a check.
+dup=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1])).get("duplicate_of") or "")' \
+  "$result" 2>/dev/null || true)
+if [ -n "$dup" ]; then
+  [ -n "${OKC_SESSION_DIR:-}" ] && echo "$used" > "$OKC_SESSION_DIR/checks_used"
+  rm -f "attempts/$stamp-$job.py" "$result"
+  echo "same code as job $dup, so the judge reused that run's result (no check spent): okc status $dup"
+  exit 0
+fi
+
+if [ $json = 1 ]; then
+  [ -s "$result" ] || { "$real" status "$job"; exit $rc; }
+  # The full result is ~200 KB: print what an agent acts on, and where the rest is.
+  python3 - "$result" <<'EOF'
+import json, sys
+path = sys.argv[1]
+d = json.load(open(path))
+r = d.get("result") or {}
+failing = [{"case": x.get("case"), "message": x.get("message")}
+           for x in r.get("records", []) if x.get("event") == "test" and x.get("status") != "pass"]
+print(json.dumps({
+    "job_id": d.get("id"), "status": d.get("status"), "duplicate_of": d.get("duplicate_of"),
+    "passed": r.get("passed"), "speedup": r.get("speedup"), "speedup_ci": r.get("speedup_ci"),
+    "error": r.get("error"), "checks": r.get("checks"), "failing_tests": failing[:5],
+    "full_result": path, "profile": (d.get("profile") or {}).get("text"),
+    "log_tail": (r.get("log_tail") or "")[-2000:],
+}, indent=1))
+EOF
+fi
+exit $rc
