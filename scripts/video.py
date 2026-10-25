@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""pitch/argon-speed.mp4, the deck narrated: ElevenLabs reads pitch/narration.json slide by slide,
-Playwright screenshots pitch/slides.html at 1920x1080, and ffmpeg holds each slide for as long as its
-narration runs. Narration is cached by its text in pitch/audio/, so a re-render only pays for the
+"""pitch/argon-speed.mp4, the deck narrated, and pitch/argon-speed.pdf, the deck as a PDF: ElevenLabs
+reads pitch/narration.json slide by slide, Playwright screenshots pitch/slides.html at 1920x1080 and
+prints it a slide per page, and ffmpeg holds each slide for as long as its narration runs. Narration is cached by its text in pitch/audio/, so a re-render only pays for the
 slides whose words changed.
 
     scripts/slides.py && scripts/video.py      (ELEVENLABS_API_KEY in .env; ELEVENLABS_VOICE to change voice)
@@ -22,7 +22,7 @@ PAD = 1.8  # seconds of quiet after each slide's narration
 SHOOT = """
 const { chromium } = require('playwright');
 (async () => {
-  const [html, out, count] = process.argv.slice(2);
+  const [html, out, count, pdf] = process.argv.slice(2);
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
   await page.goto('file://' + html);
@@ -32,6 +32,17 @@ const { chromium } = require('playwright');
     await page.waitForTimeout(200);
     await page.screenshot({ path: `${out}/slide-${String(i + 1).padStart(2, '0')}.png` });
   }
+  // A slide per page. Chrome outlines gradient-filled text in a PDF, so the title prints as an image.
+  await page.addStyleTag({ content: `
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { height: auto !important; overflow: visible !important; }
+    #stage { position: static !important; transform: none !important; height: auto !important; }
+    .slide { display: flex !important; position: relative !important; inset: auto !important; width: 1920px;
+             height: 1080px; box-sizing: border-box; overflow: hidden; break-after: page; }
+    .slide:last-of-type { break-after: auto; }
+    .hero { filter: opacity(0.999); }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }` });
+  await page.pdf({ path: pdf, width: '1920px', height: '1080px', printBackground: true });
   await browser.close();
 })();
 """
@@ -85,7 +96,8 @@ def main():
         script = os.path.join(tmp, "shoot.js")
         with open(script, "w") as f:
             f.write(SHOOT)
-        subprocess.run(["node", script, os.path.join(PITCH, "slides.html"), tmp, str(len(slides))], check=True,
+        subprocess.run(["node", script, os.path.join(PITCH, "slides.html"), tmp, str(len(slides)),
+                        os.path.join(PITCH, "argon-speed.pdf")], check=True,
                        env={**os.environ, "NODE_PATH": subprocess.run(["npm", "root", "-g"], capture_output=True,
                                                                      text=True).stdout.strip()})
         parts = []
@@ -104,7 +116,7 @@ def main():
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", listing, "-c", "copy", out],
                        check=True)
     print(f"{os.path.relpath(out, ROOT)}: {seconds(out):.0f} s over {len(slides)} slides;"
-          f" {spoken:,} characters narrated this time")
+          f" {spoken:,} characters narrated this time; and pitch/argon-speed.pdf")
 
 
 if __name__ == "__main__":

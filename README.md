@@ -10,8 +10,10 @@ Nobody's laptop is involved, and we have no GPU of our own.
 Point the same loop at Argon's own serving and every speedup makes the next iteration cheaper and
 faster, so the rate of improvement compounds. That's the speed in Argon Speed.
 
-**Pitch:** [slides](pitch/slides.html) (open in a browser, arrow keys to move) ·
-[2-minute narrated video](pitch/argon-speed.mp4)
+**Pitch:** [slides (PDF)](pitch/argon-speed.pdf) ·
+[2-minute narrated video on YouTube](https://www.youtube.com/watch?v=u9LV2i_eBSw)
+
+[![Argon Speed: watch the 2-minute pitch](pitch/cover.jpg)](https://www.youtube.com/watch?v=u9LV2i_eBSw)
 
 ## How we use Gemini 4 Argon: million-token engineering
 
@@ -96,7 +98,7 @@ scripts/managed.sh credential          # store the judge's token as a Managed Ag
 scripts/managed.sh schedule all --every 60 --checks 1 --now   # a trigger and a sandbox per problem
 scripts/managed.sh status              # schedules, latest runs, tokens and spend
 scripts/managed.sh sync all && scripts/results.py               # pull results back, regenerate results/
-scripts/slides.py && scripts/video.py  # the deck, and the video narrated with ElevenLabs
+scripts/slides.py && scripts/video.py  # the deck, then its PDF and the video narrated with ElevenLabs
 ```
 
 | path | what it is |
@@ -106,6 +108,6 @@ scripts/slides.py && scripts/video.py  # the deck, and the video narrated with E
 | `scripts/bin/okc` | the agent's judge CLI, with the guardrails above |
 | `problems/AGENTS.md` | the playbook every run follows |
 | `scripts/` | setup, scored runs, results, the deck and video generators, and a local Qwen Code fallback harness |
-| `pitch/` | the slides and the narrated video |
+| `pitch/` | the deck (`slides.html`, and as a PDF) and the narrated video |
 | `results/` | the judge's numbers and the impact model |
 | `runs/ledger.jsonl` | every run's tokens and cost |
