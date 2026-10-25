@@ -1,6 +1,6 @@
 # Results
 
-Generated 2026-10-25 21:46 UTC by `scripts/results.py` from the judge's records and the harness's own
+Generated 2026-10-25 22:39 UTC by `scripts/results.py` from the judge's records and the harness's own
 ledger. Every speedup is the judge's measurement on an H200 against SGLang's kernel for the same
 problem; numbers only, no kernels or techniques.
 
@@ -8,18 +8,18 @@ problem; numbers only, no kernels or techniques.
 
 | problem | best check | 95% interval | checks passing | our board position | board leader |
 |---|---|---|---|---|---|
-| `muse_bf16_proj` | 1.092x | 1.075-1.108 | 5 of 6 | #918 at 1.093x | 1.610x of 1004 |
-| `muse_attention_decode` | 1.260x | 1.241-1.283 | 4 of 4 | #687 at 1.130x | 2.910x of 736 |
-| `muse_moe_w4a16` | 1.323x | 1.303-1.343 | 3 of 4 | #559 at 1.322x | 2.523x of 785 |
-| `muse_decode_layer` | 1.226x | 1.207-1.244 | 1 of 2 | #525 at 1.228x | 2.285x of 683 |
-| `muse_prefill_layer` | 1.033x | 1.018-1.049 | 1 of 2 | #365 at 1.024x | 1.963x of 421 |
+| `muse_bf16_proj` | 1.092x | 1.075-1.108 | 5 of 7 | #921 at 1.093x | 1.610x of 1007 |
+| `muse_attention_decode` | 1.260x | 1.241-1.283 | 4 of 4 | #693 at 1.130x | 2.910x of 742 |
+| `muse_moe_w4a16` | 1.323x | 1.303-1.343 | 4 of 6 | #568 at 1.322x | 2.548x of 791 |
+| `muse_decode_layer` | 1.226x | 1.207-1.244 | 2 of 3 | #534 at 1.228x | 2.312x of 690 |
+| `muse_prefill_layer` | 1.062x | 1.046-1.078 | 2 of 3 | #368 at 1.024x | 1.963x of 425 |
 
 ## What it took
 
-- Hosted runs (Gemini 4 Argon as Google's managed Antigravity agent): 31
+- Hosted runs (Gemini 4 Argon as Google's managed Antigravity agent): 32
 - Local sessions (Qwen Code): 0
-- Tokens: 37,775,921 input (93% cached), 387,504 output and thinking
-- Estimated spend at Argon's introductory prices: $12.34
+- Tokens: 57,984,048 input (94% cached), 559,966 output and thinking
+- Estimated spend at Argon's introductory prices: $18.12
 
 ## Every check, oldest first
 
@@ -33,6 +33,7 @@ problem; numbers only, no kernels or techniques.
 | 2026-10-25 20:13 | 0.938x | 1.072x |
 | 2026-10-25 20:17 | 1.092x | 1.092x |
 | 2026-10-25 21:16 | 0.943x | 1.092x |
+| 2026-10-25 22:13 | failed | 1.092x |
 
 ### `muse_attention_decode`
 
@@ -51,6 +52,8 @@ problem; numbers only, no kernels or techniques.
 | 2026-10-25 20:26 | failed | 1.323x |
 | 2026-10-25 20:29 | 1.221x | 1.323x |
 | 2026-10-25 20:40 | 1.237x | 1.323x |
+| 2026-10-25 21:46 | failed | 1.323x |
+| 2026-10-25 22:29 | 1.307x | 1.323x |
 
 ### `muse_decode_layer`
 
@@ -58,6 +61,7 @@ problem; numbers only, no kernels or techniques.
 |---|---|---|
 | 2026-10-25 19:51 | failed | - |
 | 2026-10-25 19:59 | 1.226x | 1.226x |
+| 2026-10-25 21:51 | 1.156x | 1.226x |
 
 ### `muse_prefill_layer`
 
@@ -65,6 +69,7 @@ problem; numbers only, no kernels or techniques.
 |---|---|---|
 | 2026-10-25 20:07 | failed | - |
 | 2026-10-25 20:21 | 1.033x | 1.033x |
+| 2026-10-25 21:42 | 1.062x | 1.062x |
 
 ## What it's worth at scale (illustrative)
 
@@ -77,6 +82,6 @@ of the step spent in the layer's kernels (g = 0.75). The other inputs are in
 | 1.23x (ours), 10,000 GPUs | 14% | 4.4M | $17M | 12,787 years |
 | 1.23x (ours), 50,000 GPUs | 14% | 21.8M | $86M | 12,787 years |
 | 1.23x (ours), 100,000 GPUs | 14% | 43.6M | $172M | 12,787 years |
-| 2.28x (the board leader's today), 10,000 GPUs | 42% | 13.3M | $53M | 39,052 years |
-| 2.28x (the board leader's today), 50,000 GPUs | 42% | 66.5M | $263M | 39,052 years |
-| 2.28x (the board leader's today), 100,000 GPUs | 42% | 133.0M | $525M | 39,052 years |
+| 2.31x (the board leader's today), 10,000 GPUs | 43% | 13.4M | $53M | 39,413 years |
+| 2.31x (the board leader's today), 50,000 GPUs | 43% | 67.1M | $265M | 39,413 years |
+| 2.31x (the board leader's today), 100,000 GPUs | 43% | 134.2M | $530M | 39,413 years |

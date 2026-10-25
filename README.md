@@ -21,7 +21,7 @@ faster, so the rate of improvement compounds. That's the speed in Argon Speed.
   - the judge's per-shape profiles with speed-of-light bounds;
   - its own lab notebook from earlier runs.
 
-  So far that's 38M tokens over 31 hosted runs, 93% of them served from cache.
+  So far that's 58M tokens over 32 hosted runs, 94% of them served from cache.
 - **Engineering, not chat.** Argon runs the whole loop itself:
   - designs a change and writes the CUDA or Triton;
   - compiles it for the H200 in its sandbox before spending a judge check;
@@ -29,8 +29,8 @@ faster, so the rate of improvement compounds. That's the speed in Argon Speed.
 
   In one session it turned a design spec into a 742-line CUDA kernel that passed every hidden test
   on its first check, then profiled it and fixed what held it back.
-- **Cheap enough to leave on.** $12.34 for all 31 hosted runs so far, thanks to the cache. All five
-  agents around the clock come to about $73 a day.
+- **Cheap enough to leave on.** $18.12 for all 32 hosted runs so far, thanks to the cache. All five
+  agents around the clock come to about $134 a day.
 
 ## How we use Managed Agents: a kernel team that never sleeps
 
@@ -66,17 +66,17 @@ we sync results back (Files API) ─> scripts/results.py ─> results/, the deck
 
 ## Results
 
-As of 2:48 pm PT, Oct 25. On the judge's leaderboards within its first afternoon, **faster than SGLang on all five
-problems**, #590 of 1,145 teams overall. Speedups are against SGLang's own kernel for the same
+As of 3:41 pm PT, Oct 25. On the judge's leaderboards within its first afternoon, **faster than SGLang on all five
+problems**, #597 of 1,149 teams overall. Speedups are against SGLang's own kernel for the same
 problem, on an H200.
 
 | problem | SGLang's distance from speed of light | our best check | our scored run | leaderboard |
 |---|---|---|---|---|
-| Dense BF16 projections (`muse_bf16_proj`) | 2.5x | 1.09x | 1.09x | #918 of 1,004 |
-| Attention decode, paged FP8 cache (`muse_attention_decode`) | 11.4x | 1.26x | 1.13x | #687 of 736 |
-| Routed experts, NVFP4 weights (`muse_moe_w4a16`) | 4.4x | 1.32x | 1.32x | #559 of 785 |
-| Whole decoder layer, decode (`muse_decode_layer`) | 3.9x | 1.23x | 1.23x | #525 of 683 |
-| Whole decoder layer, prefill (`muse_prefill_layer`) | 3.0x | 1.03x | 1.02x | #365 of 421 |
+| Dense BF16 projections (`muse_bf16_proj`) | 2.5x | 1.09x | 1.09x | #921 of 1,007 |
+| Attention decode, paged FP8 cache (`muse_attention_decode`) | 11.4x | 1.26x | 1.13x | #693 of 742 |
+| Routed experts, NVFP4 weights (`muse_moe_w4a16`) | 4.4x | 1.32x | 1.32x | #568 of 791 |
+| Whole decoder layer, decode (`muse_decode_layer`) | 3.9x | 1.23x | 1.23x | #534 of 690 |
+| Whole decoder layer, prefill (`muse_prefill_layer`) | 3.0x | 1.06x | 1.02x | #368 of 425 |
 
 **What it's worth at scale.** Our decode-layer speedup of 1.23x makes each decode step about 14%
 faster. On 50,000 GPUs that's about $86M a year, and it saves users about 12,787 years of waiting

@@ -1,8 +1,8 @@
 {
- "generated": "2026-10-25 21:46 UTC",
+ "generated": "2026-10-25 22:39 UTC",
  "problems": {
   "muse_bf16_proj": {
-   "checks": 6,
+   "checks": 7,
    "passing": 5,
    "best": {
     "time": "2026-10-25 20:17",
@@ -64,17 +64,23 @@
       0.9291870396443875,
       0.9574871525269576
      ]
+    },
+    {
+     "time": "2026-10-25 22:13",
+     "passed": false,
+     "speedup": null,
+     "interval": null
     }
    ],
    "board": {
-    "rank": 918,
+    "rank": 921,
     "speedup": 1.0928,
     "first": false,
-    "ahead": 917,
+    "ahead": 920,
     "to_first": 1.4732
    },
    "leader": 1.6099,
-   "teams": 1004
+   "teams": 1007
   },
   "muse_attention_decode": {
    "checks": 4,
@@ -127,18 +133,18 @@
     }
    ],
    "board": {
-    "rank": 687,
+    "rank": 693,
     "speedup": 1.1303,
     "first": false,
-    "ahead": 686,
+    "ahead": 692,
     "to_first": 2.5743
    },
    "leader": 2.9097,
-   "teams": 736
+   "teams": 742
   },
   "muse_moe_w4a16": {
-   "checks": 4,
-   "passing": 3,
+   "checks": 6,
+   "passing": 4,
    "best": {
     "time": "2026-10-25 19:55",
     "passed": true,
@@ -181,21 +187,36 @@
       1.217957692860199,
       1.2550528510183776
      ]
+    },
+    {
+     "time": "2026-10-25 21:46",
+     "passed": false,
+     "speedup": null,
+     "interval": null
+    },
+    {
+     "time": "2026-10-25 22:29",
+     "passed": true,
+     "speedup": 1.3069337226195203,
+     "interval": [
+      1.2873297167802276,
+      1.3265377284588131
+     ]
     }
    ],
    "board": {
-    "rank": 559,
+    "rank": 568,
     "speedup": 1.3216,
     "first": false,
-    "ahead": 558,
-    "to_first": 1.9088
+    "ahead": 567,
+    "to_first": 1.928
    },
-   "leader": 2.5227,
-   "teams": 785
+   "leader": 2.5481,
+   "teams": 791
   },
   "muse_decode_layer": {
-   "checks": 2,
-   "passing": 1,
+   "checks": 3,
+   "passing": 2,
    "best": {
     "time": "2026-10-25 19:59",
     "passed": true,
@@ -220,28 +241,37 @@
       1.20730066695474,
       1.2440712456437166
      ]
+    },
+    {
+     "time": "2026-10-25 21:51",
+     "passed": true,
+     "speedup": 1.1558750826882018,
+     "interval": [
+      1.138536956447879,
+      1.1732132089285248
+     ]
     }
    ],
    "board": {
-    "rank": 525,
+    "rank": 534,
     "speedup": 1.2284,
     "first": false,
-    "ahead": 524,
-    "to_first": 1.8601
+    "ahead": 533,
+    "to_first": 1.8824
    },
-   "leader": 2.2849,
-   "teams": 683
+   "leader": 2.3124,
+   "teams": 690
   },
   "muse_prefill_layer": {
-   "checks": 2,
-   "passing": 1,
+   "checks": 3,
+   "passing": 2,
    "best": {
-    "time": "2026-10-25 20:21",
+    "time": "2026-10-25 21:42",
     "passed": true,
-    "speedup": 1.033346704633414,
+    "speedup": 1.0616146846326218,
     "interval": [
-     1.0178465040639126,
-     1.048846905202915
+     1.0456904643631324,
+     1.077538904902111
     ]
    },
    "history": [
@@ -259,26 +289,35 @@
       1.0178465040639126,
       1.048846905202915
      ]
+    },
+    {
+     "time": "2026-10-25 21:42",
+     "passed": true,
+     "speedup": 1.0616146846326218,
+     "interval": [
+      1.0456904643631324,
+      1.077538904902111
+     ]
     }
    ],
    "board": {
-    "rank": 365,
+    "rank": 368,
     "speedup": 1.0244,
     "first": false,
-    "ahead": 364,
+    "ahead": 367,
     "to_first": 1.9163
    },
    "leader": 1.9631,
-   "teams": 421
+   "teams": 425
   }
  },
  "spend": {
   "hosted": {
-   "runs": 31,
-   "input": 37775921,
-   "cached": 35311147,
-   "output": 387504,
-   "cost": 12.335799999999997
+   "runs": 32,
+   "input": 57984048,
+   "cached": 54445648,
+   "output": 559966,
+   "cost": 18.12109999999999
   },
   "local": {
    "sessions": 0,

@@ -12,12 +12,12 @@
  {
   "slide": 3,
   "id": "tokens",
-  "text": "Argon reads the whole stack: SGLang's source at the judge's exact commit, the judge's environment, and per-shape profiles, 38 million tokens so far. In one session it turned a design spec into a 742 line CUDA kernel that passed every hidden test on its first check, then profiled it and fixed what held it back."
+  "text": "Argon reads the whole stack: SGLang's source at the judge's exact commit, the judge's environment, and per-shape profiles, 58 million tokens so far. In one session it turned a design spec into a 742 line CUDA kernel that passed every hidden test on its first check, then profiled it and fixed what held it back."
  },
  {
   "slide": 4,
   "id": "results",
-  "text": "Here are the judge's numbers. Argon beat SGLang's kernels on all five problems, up to 1.32 times faster on routed experts, and it's on five leaderboards, ranked 590 of 1,145 teams overall, in its first afternoon. Running all five around the clock costs roughly 73 dollars a day."
+  "text": "Here are the judge's numbers. Argon beat SGLang's kernels on all five problems, up to 1.32 times faster on routed experts, and it's on five leaderboards, ranked 597 of 1,149 teams overall, in its first afternoon. Running all five around the clock costs roughly 134 dollars a day."
  },
  {
   "slide": 5,
